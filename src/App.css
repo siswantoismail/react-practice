@@ -46,14 +46,20 @@ button:hover {
   font-size: 2em;
   background-color: grey;
   border: 1px solid black;
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
 }
 
-.cards img {
+a img {
   width: 100%;
   border-radius: 5px;
+}
+
+a,
+h3 {
+  text-decoration: none;
+  color: black;
 }
 
 .navProducts {
