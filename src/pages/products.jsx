@@ -1,3 +1,4 @@
+import Button from "../components/Elements/Button";
 import CardProducts from "../components/Fragments/CardProducts";
 
 const products = [
@@ -11,13 +12,25 @@ const products = [
   },
 ];
 
+const email = localStorage.getItem("email");
+
 export default function Products() {
+  function handleLogout() {
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
+    window.location.href = "/login";
+  }
+
   return (
     <>
-      <div className="navProducts">Rahmat Ismail</div>
+      <div className="navProducts">
+        {email}
+
+        <Button onClick={handleLogout}>Logout</Button>
+      </div>
 
       {products.map((product) => (
-        <div className="productsContainer">
+        <div className="productsContainer" key={product.id}>
           <CardProducts.Header image={product.image} />
           <CardProducts.Body name={product.name}>
             {product.description}

@@ -1,3 +1,5 @@
+import Button from "../Elements/Button";
+
 const CardProducts = (props) => {
   const { children } = props;
   return <div className="products">{children}</div>;
@@ -30,7 +32,7 @@ function Footer({ price }) {
     <>
       <div className="price">
         <span>{price}</span>
-        <button>Buy Now</button>
+        <Button>Buy now</Button>
       </div>
     </>
   );

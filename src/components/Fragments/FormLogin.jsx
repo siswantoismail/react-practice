@@ -1,13 +1,28 @@
-import Label from "../Elements/Input/Label";
-import Input from "../Elements/Input/Input";
+import Button from "../Elements/Button";
+import InputForm from "../Elements/Input/Index";
 export default function FormLogin() {
+  const handleLogin = (event) => {
+    event.preventDefault();
+    localStorage.setItem("email", event.target.email.value);
+    localStorage.setItem("password", event.target.password.value);
+    window.location.href = "/products";
+    console.log("login");
+  };
   return (
-    <form action="">
-      <Label htmlFor="email">Email</Label>
-      <Input type="email" placeholder="example@gmail.com" />
-      <Label htmlFor="password">Password</Label>
-      <Input type="password" placeholder="******" />
-      <button>Login</button>
+    <form onSubmit={handleLogin}>
+      <InputForm
+        label="email"
+        type="email"
+        placeholder="example@gmail.com"
+        name="email"
+      />
+      <InputForm
+        label="Password"
+        type="password"
+        placeholder="******"
+        name="password"
+      />
+      <Button type="submit">Login</Button>
     </form>
   );
 }
