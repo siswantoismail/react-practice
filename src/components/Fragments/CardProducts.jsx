@@ -27,12 +27,20 @@ function Body(props) {
   );
 }
 
-function Footer({ price }) {
+function Footer(props) {
+  const { price, handleAddToCard, id } = props;
+  // const numericPrice = Number(price);
   return (
     <>
       <div className="price">
-        <span>{price}</span>
-        <Button>Buy now</Button>
+        <span>
+          Rp{" "}
+          {price.toLocaleString("id-ID", {
+            styles: "cerrency",
+            currency: "IDR",
+          })}
+        </span>
+        <Button onClick={() => handleAddToCard(id)}>Add to Card</Button>
       </div>
     </>
   );
