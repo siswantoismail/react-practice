@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Elements/Button";
 import CardProducts from "../components/Fragments/CardProducts";
+import { useEffect } from "react";
 
 const products = [
   {
@@ -32,12 +33,22 @@ const products = [
 const email = localStorage.getItem("email");
 
 export default function Products() {
-  const [card, setCard] = useState([
-    {
-      id: 1,
-      qty: 1,
-    },
-  ]);
+  const [card, setCard] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setCard(JSON.parse(localStorage.getItem("card")) || []);
+  }, []);
+
+  useEffect(() => {
+    if (card.length > 0) {
+      const sum = card.reduce((acc, item) => {
+        const product = products.find((product) => product.id === item.id);
+        return acc + product.price * item.qty;
+      }, 0);
+      setTotalPrice(sum);
+      localStorage.setItem("card", JSON.stringify(card));
+    }
+  }, [card]);
 
   function handleLogout() {
     localStorage.removeItem("email");
@@ -119,6 +130,20 @@ export default function Products() {
                   </tr>
                 );
               })}
+              <tr className="totalPrice">
+                <td>
+                  <b>Total Price</b>
+                </td>
+                <td>
+                  <b>
+                    Rp{" "}
+                    {totalPrice.toLocaleString("id-ID", {
+                      styles: "cerrency",
+                      currency: "IDR",
+                    })}
+                  </b>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
