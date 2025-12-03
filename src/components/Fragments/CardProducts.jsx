@@ -40,7 +40,7 @@ function Footer(props) {
             currency: "IDR",
           })}
         </span>
-        <Button onClick={() => handleAddToCard(id)}>Add to Card</Button>
+        <Button onClick={() => handleAddToCard(id)}>Add</Button>
       </div>
     </>
   );
