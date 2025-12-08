@@ -22,6 +22,7 @@ export default function FormLogin() {
         placeholder="******"
         name="password"
       />
+
       <Button type="submit">Login</Button>
     </form>
   );
