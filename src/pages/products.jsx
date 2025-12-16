@@ -3,42 +3,50 @@ import Button from "../components/Elements/Button";
 import CardProducts from "../components/Fragments/CardProducts";
 import { useRef } from "react";
 import { useEffect } from "react";
+import getProducts from "../services/product.services";
 
-const products = [
-  {
-    id: 1,
-    name: "Keyboard",
-    image: "/img/foto1.jpg",
-    price: 1000000,
-    description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
-          voluptas voluptatum consectetur repellendus inventore laboriosam?`,
-  },
-  {
-    id: 2,
-    name: "Keyboard Mecanicale",
-    image: "/img/foto1.jpg",
-    price: 700000,
-    description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
-          voluptas voluptatum consectetur repellendus inventore laboriosam?`,
-  },
-  {
-    id: 3,
-    name: "New Keyboard",
-    image: "/img/foto1.jpg",
-    price: 300000,
-    description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
-          voluptas voluptatum consectetur repellendus inventore laboriosam?`,
-  },
-];
+// const products = [
+//   {
+//     id: 1,
+//     name: "Keyboard",
+//     image: "/img/foto1.jpg",
+//     price: 1000000,
+//     description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
+//           voluptas voluptatum consectetur repellendus inventore laboriosam?`,
+//   },
+//   {
+//     id: 2,
+//     name: "Keyboard Mecanicale",
+//     image: "/img/foto1.jpg",
+//     price: 700000,
+//     description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
+//           voluptas voluptatum consectetur repellendus inventore laboriosam?`,
+//   },
+//   {
+//     id: 3,
+//     name: "New Keyboard",
+//     image: "/img/foto1.jpg",
+//     price: 300000,
+//     description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
+//           voluptas voluptatum consectetur repellendus inventore laboriosam?`,
+//   },
+// ];
 
 const email = localStorage.getItem("email");
 
 export default function Products() {
   const [card, setCard] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     setCard(JSON.parse(localStorage.getItem("card")) || []);
+  }, []);
+
+  useEffect(() => {
+    getProducts((data) => {
+      console.log(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -80,7 +88,7 @@ export default function Products() {
   const totalPriceRef = useRef(null);
 
   useEffect(() => {
-    if (card.length > 0) {
+    if (products.length > 0 && card.length > 0) {
       totalPriceRef.current.style.display = "table-row";
     } else {
       totalPriceRef.current.style.display = "none";
@@ -96,19 +104,20 @@ export default function Products() {
       </div>
       <div className="productCard">
         <div className="productContent">
-          {products.map((product) => (
-            <div className="productsContainer" key={product.id}>
-              <CardProducts.Header image={product.image} />
-              <CardProducts.Body name={product.name}>
-                {product.description}
-              </CardProducts.Body>
-              <CardProducts.Footer
-                price={product.price}
-                id={product.id}
-                handleAddToCard={handleAddToCard}
-              />
-            </div>
-          ))}
+          {products.length > 0 &&
+            products.map((product) => (
+              <div className="productsContainer" key={product.id}>
+                <CardProducts.Header image={product.image} />
+                <CardProducts.Body name={product.name}>
+                  {product.description}
+                </CardProducts.Body>
+                <CardProducts.Footer
+                  price={product.price}
+                  id={product.id}
+                  handleAddToCard={handleAddToCard}
+                />
+              </div>
+            ))}
         </div>
         <div className="sidebar">
           <h1>Card</h1>
@@ -123,32 +132,33 @@ export default function Products() {
               </tr>
             </thead>
             <tbody>
-              {card.map((item) => {
-                const product = products.find(
-                  (product) => product.id === item.id
-                );
-                return (
-                  <tr key={item.id}>
-                    <td>{product.id}</td>
-                    <td>{product.name}</td>
-                    <td>
-                      {" "}
-                      {product.price.toLocaleString("id-ID", {
-                        styles: "cerrency",
-                        currency: "IDR",
-                      })}
-                    </td>
-                    <td>{item.qty}</td>
-                    <td>
-                      Rp{" "}
-                      {(item.qty * product.price).toLocaleString("id-ID", {
-                        styles: "cerrency",
-                        currency: "IDR",
-                      })}
-                    </td>
-                  </tr>
-                );
-              })}
+              {products.length > 0 &&
+                card.map((item) => {
+                  const product = products.find(
+                    (product) => product.id === item.id
+                  );
+                  return (
+                    <tr key={item.id}>
+                      <td>{product.id}</td>
+                      <td>{product.name}</td>
+                      <td>
+                        {" "}
+                        {product.price.toLocaleString("id-ID", {
+                          styles: "cerrency",
+                          currency: "IDR",
+                        })}
+                      </td>
+                      <td>{item.qty}</td>
+                      <td>
+                        Rp{" "}
+                        {(item.qty * product.price).toLocaleString("id-ID", {
+                          styles: "cerrency",
+                          currency: "IDR",
+                        })}
+                      </td>
+                    </tr>
+                  );
+                })}
               <tr className="totalPrice" ref={totalPriceRef}>
                 <td>
                   <b>Total Price</b>

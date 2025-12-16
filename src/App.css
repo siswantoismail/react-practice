@@ -1,7 +1,7 @@
 .container {
   max-width: 500px;
-  margin: auto;
-  margin-top: 50%;
+  margin: 100px auto;
+
   font-size: 30px;
   font-family: Arial, sans-serif;
   display: grid;
