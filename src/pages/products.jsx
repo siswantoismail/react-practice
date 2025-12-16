@@ -5,32 +5,32 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import getProducts from "../services/product.services";
 
-// const products = [
-//   {
-//     id: 1,
-//     name: "Keyboard",
-//     image: "/img/foto1.jpg",
-//     price: 1000000,
-//     description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
-//           voluptas voluptatum consectetur repellendus inventore laboriosam?`,
-//   },
-//   {
-//     id: 2,
-//     name: "Keyboard Mecanicale",
-//     image: "/img/foto1.jpg",
-//     price: 700000,
-//     description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
-//           voluptas voluptatum consectetur repellendus inventore laboriosam?`,
-//   },
-//   {
-//     id: 3,
-//     name: "New Keyboard",
-//     image: "/img/foto1.jpg",
-//     price: 300000,
-//     description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
-//           voluptas voluptatum consectetur repellendus inventore laboriosam?`,
-//   },
-// ];
+const products = [
+  {
+    id: 1,
+    name: "Keyboard",
+    image: "/img/foto1.jpg",
+    price: 1000000,
+    description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
+          voluptas voluptatum consectetur repellendus inventore laboriosam?`,
+  },
+  {
+    id: 2,
+    name: "Keyboard Mecanicale",
+    image: "/img/foto1.jpg",
+    price: 700000,
+    description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
+          voluptas voluptatum consectetur repellendus inventore laboriosam?`,
+  },
+  {
+    id: 3,
+    name: "New Keyboard",
+    image: "/img/foto1.jpg",
+    price: 300000,
+    description: `   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo,
+          voluptas voluptatum consectetur repellendus inventore laboriosam?`,
+  },
+];
 
 const email = localStorage.getItem("email");
 
@@ -78,6 +78,7 @@ export default function Products() {
     }
   }
 
+  // card menggunakan useRef
   const cardRef = useRef(JSON.parse(localStorage.getItem("card")) || []);
 
   const handleAddToCardRef = (id) => {
@@ -93,7 +94,7 @@ export default function Products() {
     } else {
       totalPriceRef.current.style.display = "none";
     }
-  });
+  }, [card, products]);
 
   return (
     <>
